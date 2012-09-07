@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,36 +7,30 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class ThrowTheBall {
-    public int timesThrown(int N, int M, int L) {
+public class ToastXToast {
+    public int bake(int[] undertoasted, int[] overtoasted) {
         int res;
-        int mat[] = new int [N];
-        int n=0;
-        int current = 0;
-        while(true){
-        	System.err.print(" "+current);
-        	if(++mat[current]==M)break;
-        	if(mat[current]%2!=0){
-        		current=(current+L+1)%N;
-        	}else{
-        		int d = current-(L+1);
-        		if(d<0)
-        			current=(N-1)+(d+1);
-        		else
-        			current = d;
-        	}
-        	n++;	
-        }
-        return n;
+        sort(undertoasted);
+        sort(overtoasted);
+////        for (int i = 0; i < overtoasted.length; i++) {
+////            overtoasted[i] = i;
+//        }
+        if(undertoasted[0]>overtoasted[0])
+            return -1;
+        if(undertoasted[undertoasted.length-1]>overtoasted[overtoasted.length-1])
+            return -1;
+        if(undertoasted[undertoasted.length-1]<overtoasted[0])
+            return 1;
+        return 2;
     }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new ThrowTheBall()).timesThrown(5, 3, 2),10);
-            eq(1,(new ThrowTheBall()).timesThrown(4, 1, 3),0);
-            eq(2,(new ThrowTheBall()).timesThrown(10, 3, 5),4);
-            eq(3,(new ThrowTheBall()).timesThrown(15, 4, 9),15);
+            eq(0,(new ToastXToast()).bake(new int[] {2,4}, new int[] {5,6,3}),2);
+            eq(1,(new ToastXToast()).bake(new int[] {5}, new int[] {4}),-1);
+            eq(2,(new ToastXToast()).bake(new int[] {1,2,3}, new int[] {5,6,7}),1);
+            eq(3,(new ToastXToast()).bake(new int[] {1,3,5}, new int[] {2,4,6}),2);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

@@ -6,138 +6,40 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class TheBrickTowerMediumDivTwo {
-	int [] hcopy;
-	int [] _heights;
-    public int[] find(int[] heights) {
-    	
-//    	hcopy = Arrays.copyOf(heights, heights.length);
-    	hcopy=arrcopy(heights,hcopy);
-    	sort(hcopy);
-//    	print(heights);
-//    	print(hcopy);
-//    	System.err.println("x");
-    	_heights=heights;
-        int[] res=new int[heights.length];        
-        for (int i = 0; i < res.length; i++) {
-			res[i]=i;
-		}
-        int min = Integer.MAX_VALUE;
-        int res1[]=new int[res.length];
-        do{
-        	int [] r = new int [_heights.length];
-        	for (int i = 0; i < r.length; i++) {
-        		r[i]=_heights[res[i]];
-    		}
-//        	print(res);
-//        	print(r);
-        	int dist=distance(r);
-        	if(dist<min){
-        		min=dist;
-//    			res1=Arrays.copyOf(res, res.length);
-    			res1=arrcopy(res,res1);
-        	}else if(dist==min){
-        		if(min==Integer.MAX_VALUE){	    			
-//	    			System.arraycopy(res, 0, res.length, res1,0,res.length);
-	    			res1=arrcopy(res,res1);
-        		}else{
-        			if(islessthan(res,res1)){
-            			min=dist;
-            			res1=arrcopy(res,res1);
-            		}	
-        		}
-        	}
-        }while(nextPermutation(res));
-        return res1;
-    }
-    int [] arrcopy(int[]a,int b[]){
-    	b= new int[a.length];
-    	for (int i = 0; i < b.length; i++) {
-			b[i]=a[i];
-		}
-    	return b;
-    }
-    boolean islessthan(int res[], int []res1){
-    	for (int i = 0; i < res.length; i++) {
-			if(res[i]>res1[i]){
-				return false;
+public class MinimalDifference {
+    public int findNumber(int A, int B, int C) {
+        int res;
+        int c = val(C);
+        int dif = Integer.MAX_VALUE;
+        int difval=Integer.MAX_VALUE;
+        for (int i = B; i >=A ; i--) {
+			int x = val(i);
+			int newdif=abs(x-c);
+			if(newdif<dif){
+				dif=newdif;
+				difval=i;
+			}if(newdif==dif){
+				difval=i;
 			}
 		}
-    	return true;
+        return difval;
     }
-    
-    int distance(int a[]){
-    	int r = 0;
-    	for (int i = 1; i < a.length; i++) {
-			r+=max(a[i],a[i-1]);
-		}
-    	return r;
+    int val(int x){
+    	int r=0;
+    	while(x>0){
+    		r+=x%10;
+    		x/=10;
+    	}
+    	return r;    	
     }
-    boolean check(int a[]){
-    	for (int i = 0; i < a.length; i++) {
-			if(i%2!=0){
-				{
-					if(a[i]!=hcopy[i] && a[i]!=hcopy[i-1]){
-						return false;
-					}
-				}
-				
-			}else{
-				if(i==a.length-1){
-					if(a[i]!=hcopy[i]){
-						return false;
-					}
-				}else {
-					if(a[i]!=hcopy[i] && a[i]!=hcopy[i+1]){
-						return false;
-					}
-				}
-			}
-		}
-    	return true;
-    }
-    
-    void swap(int[] a, int i, int j) {
-        int tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
-
-    void reverse(int a[]) {
-        reverse(a, 0, a.length);
-    }
-
-    void reverse(int a[], int from, int to) {
-        while (from < --to) {
-            swap(a, from++, to);
-        }
-    }
-
-    boolean nextPermutation(int[] a) {
-        int j = a.length - 1;
-        if (j <= 0) {
-            return false;
-        }
-        while (j > 0 && a[j] <= a[--j]);
-
-        if (a[j + 1] <= a[j]) {
-            reverse(a);
-            return false;
-        }
-        int k = a.length;
-        while (a[--k] <= a[j]);
-        swap(a, k, j);
-        reverse(a, j + 1, a.length);
-        return true;
-    }
-
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new TheBrickTowerMediumDivTwo()).find(new int[] {4, 7, 5}),new int[] {0, 2, 1 });
-            eq(1,(new TheBrickTowerMediumDivTwo()).find(new int[] {4, 4, 4, 4, 4, 4, 4}),new int[] {0, 1, 2, 3, 4, 5, 6 });
-            eq(2,(new TheBrickTowerMediumDivTwo()).find(new int[] {2, 3, 3, 2}),new int[] {0, 3, 1, 2 });
-            eq(3,(new TheBrickTowerMediumDivTwo()).find(new int[] {13, 32, 38, 25, 43, 47, 6}),new int[] {0, 6, 3, 1, 2, 4, 5 });
+            eq(0,(new MinimalDifference()).findNumber(1, 9, 10),1);
+            eq(1,(new MinimalDifference()).findNumber(11, 20, 20),11);
+            eq(2,(new MinimalDifference()).findNumber(1, 1, 999),1);
+            eq(3,(new MinimalDifference()).findNumber(100, 1000, 99),189);
+            eq(4,(new MinimalDifference()).findNumber(1987, 9123, 1),2000);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

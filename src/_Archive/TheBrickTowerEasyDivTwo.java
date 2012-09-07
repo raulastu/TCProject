@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,65 +7,29 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class TheLuckyString {
-    public int count(String s) {
+public class TheBrickTowerEasyDivTwo {
+    public int find(int redCount, int redHeight, int blueCount, int blueHeight) {
         int res=0;
-        char [] cc = s.toCharArray();
-        sort(cc);
-        do{
-        	if(is(cc))
-        		res++;
-        }while(nextPerm(cc));        		
+        int [] done = new int[48*48*48*48];
+        for (int i = 0; i <= redCount; i++) {        	
+        	for (int j = 0; j <= blueCount; j++) {
+				if( (j+i)>0 && abs(i-j)<=1 && done[j*blueHeight+i*redHeight]==0){					
+//					System.err.println(i+"x "+j);
+					done[j*blueHeight+i*redHeight]=1;
+					res++;
+				}
+			}
+		}
         return res;
     }
-    
-    boolean is(char []cc){
-    	for(int i=1;i<cc.length;i++){
-    		if(cc[i]==cc[i-1])
-    			return false;
-    	}
-    	return true;
-    }
-    
-    private boolean nextPerm(char[] a) {
-        if (a.length <= 1) {
-            return false;
-        }
-        int i = a.length - 1;
-        while (a[i - 1] >= a[i]) {
-            i--;
-            if (i == 0) {
-                return false;
-            }
-        }
-        int j = a.length;
-        while (a[j - 1] <= a[i - 1]) {
-            j--;
-            if (j == 0) {
-                return false;
-            }
-        }
-        char tmp = a[i - 1];
-        a[i - 1] = a[j - 1];
-        a[j - 1] = tmp;
-        i++;
-        j = a.length;
-        while (i < j) {
-            tmp = a[i - 1];
-            a[i - 1] = a[j - 1];
-            a[j - 1] = tmp;
-            i++;
-            j--;
-        }
-        return true;
-    }
+
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new TheLuckyString()).count("ab"),2);
-            eq(1,(new TheLuckyString()).count("aaab"),0);
-            eq(2,(new TheLuckyString()).count("aabbbaa"),1);
-            eq(3,(new TheLuckyString()).count("abcdefghij"),3628800);
+            eq(0,(new TheBrickTowerEasyDivTwo()).find(1, 2, 3, 4),4);
+            eq(1,(new TheBrickTowerEasyDivTwo()).find(4, 4, 4, 7),12);
+            eq(2,(new TheBrickTowerEasyDivTwo()).find(7, 7, 4, 4),13);
+            eq(3,(new TheBrickTowerEasyDivTwo()).find(47, 47, 47, 47),94);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

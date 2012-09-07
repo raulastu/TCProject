@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,19 +7,25 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class TheStringGame {
-    public String winner(String s) {
-        String res;
-        return res;
+public class PairingPawns {
+    public int savedPawnCount(int[] start) {
+        int res;
+        for (int i = start.length-1; i > 0 ; i--) {
+			start[i-1]+=start[i]/2;
+		}
+//        print(start);
+        return start[0];
     }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new TheStringGame()).winner("XXOXXXLXLX"),"John 1");
-            eq(1,(new TheStringGame()).winner("LXXLXXL"),"Brus 2");
-            eq(2,(new TheStringGame()).winner("LLOOLLOOLLOOLLOO"),"Draw");
-            eq(3,(new TheStringGame()).winner("XXXXXXXXXXXXXXXX"),"Brus 16");
+            eq(0,(new PairingPawns()).savedPawnCount(new int[] {0,2}),1);
+            eq(1,(new PairingPawns()).savedPawnCount(new int[] {10,3}),11);
+            eq(2,(new PairingPawns()).savedPawnCount(new int[] {0,0,0,8}),1);
+            eq(3,(new PairingPawns()).savedPawnCount(new int[] {0,1,1,2}),1);
+            eq(4,(new PairingPawns()).savedPawnCount(new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,123456}),0);
+            eq(5,(new PairingPawns()).savedPawnCount(new int[] {1000,2000,3000,4000,5000,6000,7000,8000}),3921);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

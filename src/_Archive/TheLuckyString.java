@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,75 +7,65 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class FriendScore {
-    public int highestScore(String[] friends) {
-        int res;
-        int [][] relations = new int [2][friends.length];		
-        		
-        		
-        for (int i = 0; i < friends.length; i++) {
-			for (int j = 0; j < friends.length; j++) {
-				if(friends[i].charAt(j)=='Y'){
-					relations[0][i]++;
-				}
-			}
-		}
-        print(relations);
-        for (int i = 0; i < friends.length; i++) {
-			for (int j = 0; j < friends.length; j++) {
-				if(friends[i].charAt(j)=='Y'){
-					relations[1][i]+=relations[0][j]-1;
-				}
-			}
-		}
-        print(relations);
-        int max = 0;
-        for (int i = 0; i < relations.length; i++) {
-			int xmax = relations[0][i]+relations[1][i];
-			max = max(xmax,max);
-		}
-        return max;
+public class TheLuckyString {
+    public int count(String s) {
+        int res=0;
+        char [] cc = s.toCharArray();
+        sort(cc);
+        do{
+        	if(is(cc))
+        		res++;
+        }while(nextPerm(cc));        		
+        return res;
     }
-
+    
+    boolean is(char []cc){
+    	for(int i=1;i<cc.length;i++){
+    		if(cc[i]==cc[i-1])
+    			return false;
+    	}
+    	return true;
+    }
+    
+    private boolean nextPerm(char[] a) {
+        if (a.length <= 1) {
+            return false;
+        }
+        int i = a.length - 1;
+        while (a[i - 1] >= a[i]) {
+            i--;
+            if (i == 0) {
+                return false;
+            }
+        }
+        int j = a.length;
+        while (a[j - 1] <= a[i - 1]) {
+            j--;
+            if (j == 0) {
+                return false;
+            }
+        }
+        char tmp = a[i - 1];
+        a[i - 1] = a[j - 1];
+        a[j - 1] = tmp;
+        i++;
+        j = a.length;
+        while (i < j) {
+            tmp = a[i - 1];
+            a[i - 1] = a[j - 1];
+            a[j - 1] = tmp;
+            i++;
+            j--;
+        }
+        return true;
+    }
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new FriendScore()).highestScore(new String[] {"NNN",
-                "NNN",
-                "NNN"}),0);
-            eq(1,(new FriendScore()).highestScore(new String[] {"NYY",
-                "YNY",
-                "YYN"}),2);
-            eq(2,(new FriendScore()).highestScore(new String[] {"NYNNN",
-                "YNYNN", 
-                "NYNYN", 
-                "NNYNY", 
-                "NNNYN"}),4);
-            eq(3,(new FriendScore()).highestScore(new String[] {"NNNNYNNNNN",
-                "NNNNYNYYNN",
-                "NNNYYYNNNN",
-                "NNYNNNNNNN",
-                "YYYNNNNNNY",
-                "NNYNNNNNYN",
-                "NYNNNNNYNN",
-                "NYNNNNYNNN",
-                "NNNNNYNNNN",
-                "NNNNYNNNNN"}),8);
-            eq(4,(new FriendScore()).highestScore(new String[] {"NNNNNNNNNNNNNNY",
-                "NNNNNNNNNNNNNNN",
-                "NNNNNNNYNNNNNNN",
-                "NNNNNNNYNNNNNNY",
-                "NNNNNNNNNNNNNNY",
-                "NNNNNNNNYNNNNNN",
-                "NNNNNNNNNNNNNNN",
-                "NNYYNNNNNNNNNNN",
-                "NNNNNYNNNNNYNNN",
-                "NNNNNNNNNNNNNNY",
-                "NNNNNNNNNNNNNNN",
-                "NNNNNNNNYNNNNNN",
-                "NNNNNNNNNNNNNNN",
-                "NNNNNNNNNNNNNNN",
-                "YNNYYNNNNYNNNNN"}),6);
+            eq(0,(new TheLuckyString()).count("ab"),2);
+            eq(1,(new TheLuckyString()).count("aaab"),0);
+            eq(2,(new TheLuckyString()).count("aabbbaa"),1);
+            eq(3,(new TheLuckyString()).count("abcdefghij"),3628800);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

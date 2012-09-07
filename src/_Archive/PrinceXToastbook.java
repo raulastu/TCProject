@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,25 +7,63 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class PairingPawns {
-    public int savedPawnCount(int[] start) {
-        int res;
-        for (int i = start.length-1; i > 0 ; i--) {
-			start[i-1]+=start[i]/2;
+public class PrinceXToastbook {
+	class Node{
+		int n;
+		int booksUnderstood;
+		public Node(int n , int booksUnderstood) {
+			this.n=n;
+			this.booksUnderstood=booksUnderstood;
 		}
-//        print(start);
-        return start[0];
+	}
+    public double eat(int[] prerequisite) {
+        double res;
+        this.prerequisite =prerequisite; 
+        
+        int c = 0;
+        int total = 0;
+        
+        for (int xi = 0; xi < prerequisite.length; xi++) {
+        	Queue<Node> queue = new LinkedList<Node>();
+        	Set<Integer>s = new HashSet<Integer>();
+            Set<Integer>knowledge = new HashSet<Integer>();            
+            queue.add(new Node(1, xi));            
+        	while(!queue.isEmpty()){
+            	print(queue);
+            	Node p = queue.poll();
+            	if(p.n==prerequisite.length){
+            		c++;
+            		total+=p.booksUnderstood;
+            	}      
+            	for (int i = 0; i < prerequisite.length; i++) {
+        			if(!s.contains(i)){
+        				Node q; 
+        				if(knowledge.contains(prerequisite[i])){
+        					q = new Node(p.n+1, p.booksUnderstood+1);
+        				}else{
+        					q = new Node(p.n+1, p.booksUnderstood);
+        				}
+        				queue.add(q);
+        				s.add(i);
+        			}
+        		}
+            }
+		}
+        
+        return c==0?0.0:total/c;
     }
-
+    int [] prerequisite;
+    public boolean understood(Set<Integer> s,int i){
+    	return s.contains(i) || prerequisite[i]==-1;
+    }
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new PairingPawns()).savedPawnCount(new int[] {0,2}),1);
-            eq(1,(new PairingPawns()).savedPawnCount(new int[] {10,3}),11);
-            eq(2,(new PairingPawns()).savedPawnCount(new int[] {0,0,0,8}),1);
-            eq(3,(new PairingPawns()).savedPawnCount(new int[] {0,1,1,2}),1);
-            eq(4,(new PairingPawns()).savedPawnCount(new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,123456}),0);
-            eq(5,(new PairingPawns()).savedPawnCount(new int[] {1000,2000,3000,4000,5000,6000,7000,8000}),3921);
+            eq(0,(new PrinceXToastbook()).eat(new int[] {-1, 0}),1.5);
+            eq(1,(new PrinceXToastbook()).eat(new int[] {-1, 0, 1}),1.6666666666666667);
+            eq(2,(new PrinceXToastbook()).eat(new int[] {1, -1, 1}),2.0);
+            eq(3,(new PrinceXToastbook()).eat(new int[] {1, 0}),0.0);
+            eq(4,(new PrinceXToastbook()).eat(new int[] {-1, -1}),2.0);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

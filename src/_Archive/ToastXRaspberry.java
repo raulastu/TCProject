@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,38 +7,19 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class KingXNewBaby {
-	String name;
-    public String isValid(String name) {
-        String res;
-        this.name=name;
-        if(go("a") ||
-        		go("e") ||
-        		go("i") ||
-        		go("o") ||
-        		go("u") ){
-        	return "YES";
-        }                
-        return "NO";
-    }
-    boolean go(String v){
-    	String s = name.replaceAll("["+v+"]+", "");
-        if(s.length()==name.length()-2){
-        	if(s.length()==6)return true;
-        }
-        return false;
+public class ToastXRaspberry {
+    public int apply(int upper_limit, int layer_count) {
+        int res;
+        res = (int)ceil(layer_count/(double)upper_limit);
+        return res;
     }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new KingXNewBaby()).isValid("dengklek"),"YES");
-            eq(1,(new KingXNewBaby()).isValid("gofushar"),"NO");
-            eq(2,(new KingXNewBaby()).isValid("dolphinigle"),"NO");
-            eq(3,(new KingXNewBaby()).isValid("mystictc"),"NO");
-            eq(4,(new KingXNewBaby()).isValid("rngringo"),"NO");
-            eq(5,(new KingXNewBaby()).isValid("misof"),"NO");
-            eq(6,(new KingXNewBaby()).isValid("metelsky"),"YES");
+            eq(0,(new ToastXRaspberry()).apply(4, 13),4);
+            eq(1,(new ToastXRaspberry()).apply(8, 5),1);
+            eq(2,(new ToastXRaspberry()).apply(73, 265),4);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

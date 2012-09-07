@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,63 +7,38 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class PrinceXToastbook {
-	class Node{
-		int n;
-		int booksUnderstood;
-		public Node(int n , int booksUnderstood) {
-			this.n=n;
-			this.booksUnderstood=booksUnderstood;
-		}
-	}
-    public double eat(int[] prerequisite) {
-        double res;
-        this.prerequisite =prerequisite; 
-        
-        int c = 0;
-        int total = 0;
-        
-        for (int xi = 0; xi < prerequisite.length; xi++) {
-        	Queue<Node> queue = new LinkedList<Node>();
-        	Set<Integer>s = new HashSet<Integer>();
-            Set<Integer>knowledge = new HashSet<Integer>();            
-            queue.add(new Node(1, xi));            
-        	while(!queue.isEmpty()){
-            	print(queue);
-            	Node p = queue.poll();
-            	if(p.n==prerequisite.length){
-            		c++;
-            		total+=p.booksUnderstood;
-            	}      
-            	for (int i = 0; i < prerequisite.length; i++) {
-        			if(!s.contains(i)){
-        				Node q; 
-        				if(knowledge.contains(prerequisite[i])){
-        					q = new Node(p.n+1, p.booksUnderstood+1);
-        				}else{
-        					q = new Node(p.n+1, p.booksUnderstood);
-        				}
-        				queue.add(q);
-        				s.add(i);
-        			}
-        		}
-            }
-		}
-        
-        return c==0?0.0:total/c;
+public class PaperAndPaintEasy {
+    public long computeArea(int width, int height, int xfold, int cnt, int x1, int y1, int x2, int y2) {
+        long res;
+        long area = (x2-x1)*(y2-y1);
+        res = area*(long)(cnt+1);        
+        xfold=min(xfold,width-xfold);
+        long foldedArea=0;
+        if(x1<xfold){
+        	long xf=0;
+        	if(x2<xfold){
+        		xf=x2-x1;
+        	}else{
+        		xf=xfold-x1;
+        	}
+        	foldedArea = xf*(long)(y2-y1);
+        }
+//        System.err.println(area+" "+res);
+//        System.err.println(foldedArea);
+        res+=(foldedArea*(long)(cnt+1));
+        return (long)width*(long)height-res;
     }
-    int [] prerequisite;
-    public boolean understood(Set<Integer> s,int i){
-    	return s.contains(i) || prerequisite[i]==-1;
-    }
+
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new PrinceXToastbook()).eat(new int[] {-1, 0}),1.5);
-            eq(1,(new PrinceXToastbook()).eat(new int[] {-1, 0, 1}),1.6666666666666667);
-            eq(2,(new PrinceXToastbook()).eat(new int[] {1, -1, 1}),2.0);
-            eq(3,(new PrinceXToastbook()).eat(new int[] {1, 0}),0.0);
-            eq(4,(new PrinceXToastbook()).eat(new int[] {-1, -1}),2.0);
+            eq(0,(new PaperAndPaintEasy()).computeArea(5, 6, 2, 2, 1, 1, 3, 2),21L);
+            eq(1,(new PaperAndPaintEasy()).computeArea(3, 13, 1, 0, 1, 8, 2, 12),35L);
+            eq(2,(new PaperAndPaintEasy()).computeArea(12, 12, 7, 3, 3, 1, 6, 2),124L);
+            eq(3,(new PaperAndPaintEasy()).computeArea(4, 5, 4, 0, 0, 0, 1, 1),19L);
+            eq(4,(new PaperAndPaintEasy()).computeArea(4, 8, 4, 3, 0, 1, 2, 2),24L);
+            eq(5,(new PaperAndPaintEasy()).computeArea(4, 8, 3, 0, 1, 1, 3, 2),30L);
+            eq(5,(new PaperAndPaintEasy()).computeArea(298140737, 517853687, 236446916, 42, 39184978, 612986, 47019319, 2238239),153298260286005841L);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

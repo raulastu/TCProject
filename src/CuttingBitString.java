@@ -6,19 +6,50 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class ToastXRaspberry {
-    public int apply(int upper_limit, int layer_count) {
-        int res;
-        res = (int)ceil(layer_count/(double)upper_limit);
-        return res;
+public class CuttingBitString {
+	Set<String> set;
+    public int getmin(String S) {
+//        int res;
+        this.S=S;
+        String ss ="1";
+        set=new HashSet<String>();        
+        for (long i = 1; ss.length()<=50; i*=5) {
+			ss=Long.toBinaryString(i);
+			set.add(ss);
+		}
+        for (int i = 0; i < memo.length; i++) {
+        	fill(memo[i],-1);
+		}
+        int res=go(0,0);
+        return res!=Integer.MAX_VALUE?res:-1;
+    }
+    String S;
+    int[][]memo=new int[50][50];
+    public int go(int i, int count){
+    	if(i==S.length()){
+    		return count;
+    	}
+    	if(memo[i][count]!=-1)return memo[i][count];
+    	
+    	int res = Integer.MAX_VALUE;
+    	for (int j = i+1; j <= S.length(); j++) {
+    		String subs=S.substring(i,j);
+    		if(set.contains(subs)){
+    			res = min(res,go(j,count+1));
+    		}
+		}
+    	return memo[i][count]=res;
     }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new ToastXRaspberry()).apply(4, 13),4);
-            eq(1,(new ToastXRaspberry()).apply(8, 5),1);
-            eq(2,(new ToastXRaspberry()).apply(73, 265),4);
+            eq(0,(new CuttingBitString()).getmin("101101101"),3);
+            eq(1,(new CuttingBitString()).getmin("1111101"),1);
+            eq(2,(new CuttingBitString()).getmin("00000"),-1);
+            eq(3,(new CuttingBitString()).getmin("110011011"),3);
+            eq(4,(new CuttingBitString()).getmin("1000101011"),-1);
+            eq(5,(new CuttingBitString()).getmin("111011100110101100101110111"),5);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

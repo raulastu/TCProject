@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,71 +7,75 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class MinskyMysteryDiv2 {
-    public long computeAnswer(long N) {
-        long res;
-        long bag0=0,bag1=0,bag2=0,bag3=0,bag4=0;
-        bag0=N;
-        bag1++;
-        System.err.println(N);
-
-        while(true){
-//        	System.err.println("proc for "+N);
-        	bag1++; //2 3 4
-        	bag4=0;        	
-        	while(bag0!=0){
-        		if(bag0!=0 && bag1!=0){
-        			long min = Math.min(bag0,bag1);
-        			bag2+=min;	//2 to bag2, 3 to bag2
-        			bag3+=min;    //2 to bag3, 3 to bag3,
-        			bag0-=min;   //bag0 2 less, 3 less
-        			bag1-=min;
-        		}        
-        		bag4++;
-        		if(bag1==0&&bag0==0){        			
-        			bag4+=bag3;
-        			bag3=0;
-        			System.err.println(bag4);
-        			return bag4;
-        		}
-        		bag1+=bag3; //2 to bag1, 3 to bag1
-        		bag3=0;
-        	}
-        	bag0+=bag2; //2 more to bag0, 3 more to bag0
-        	bag2=0;
-        }  
-//        return -1;
+public class FriendScore {
+    public int highestScore(String[] friends) {
+        int res;
+        int [][] relations = new int [2][friends.length];		
+        		
+        		
+        for (int i = 0; i < friends.length; i++) {
+			for (int j = 0; j < friends.length; j++) {
+				if(friends[i].charAt(j)=='Y'){
+					relations[0][i]++;
+				}
+			}
+		}
+        print(relations);
+        for (int i = 0; i < friends.length; i++) {
+			for (int j = 0; j < friends.length; j++) {
+				if(friends[i].charAt(j)=='Y'){
+					relations[1][i]+=relations[0][j]-1;
+				}
+			}
+		}
+        print(relations);
+        int max = 0;
+        for (int i = 0; i < relations.length; i++) {
+			int xmax = relations[0][i]+relations[1][i];
+			max = max(xmax,max);
+		}
+        return max;
     }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-        	for (int i = 10; i < 1000000; i++) {
-        		long real = new MinskyMysteryDiv2().computeAnswer(i);
-        		long N=i;
-        		long notr=0;
-                if(N>=2)
-                	if(N%2==0)
-                		notr=(N)/2+2;
-                	else
-                		notr=(N)+1;
-                else 
-                	notr = -1;
-                if(notr==real){
-                	System.err.println("DEAL "+real+" "+notr);
-                }else{
-                	System.err.println("DEAL B"+real+" "+notr);
-                	break;
-                }
-			}
-//        	eq(0,(new MinskyMysteryDiv2()).computeAnswer(1000000L),3L);
-//        	eq(1,(new MinskyMysteryDiv2()).computeAnswer(1000000000L),3L);
-//        	eq(0,(new MinskyMysteryDiv2()).computeAnswer(1000000000000L),3L);
-//            eq(0,(new MinskyMysteryDiv2()).computeAnswer(2L),3L);
-//            eq(1,(new MinskyMysteryDiv2()).computeAnswer(3L),4L);
-//            eq(2,(new MinskyMysteryDiv2()).computeAnswer(4L),4L);
-//            eq(3,(new MinskyMysteryDiv2()).computeAnswer(15L),8L);
-//            eq(4,(new MinskyMysteryDiv2()).computeAnswer(24L),14L);
+            eq(0,(new FriendScore()).highestScore(new String[] {"NNN",
+                "NNN",
+                "NNN"}),0);
+            eq(1,(new FriendScore()).highestScore(new String[] {"NYY",
+                "YNY",
+                "YYN"}),2);
+            eq(2,(new FriendScore()).highestScore(new String[] {"NYNNN",
+                "YNYNN", 
+                "NYNYN", 
+                "NNYNY", 
+                "NNNYN"}),4);
+            eq(3,(new FriendScore()).highestScore(new String[] {"NNNNYNNNNN",
+                "NNNNYNYYNN",
+                "NNNYYYNNNN",
+                "NNYNNNNNNN",
+                "YYYNNNNNNY",
+                "NNYNNNNNYN",
+                "NYNNNNNYNN",
+                "NYNNNNYNNN",
+                "NNNNNYNNNN",
+                "NNNNYNNNNN"}),8);
+            eq(4,(new FriendScore()).highestScore(new String[] {"NNNNNNNNNNNNNNY",
+                "NNNNNNNNNNNNNNN",
+                "NNNNNNNYNNNNNNN",
+                "NNNNNNNYNNNNNNY",
+                "NNNNNNNNNNNNNNY",
+                "NNNNNNNNYNNNNNN",
+                "NNNNNNNNNNNNNNN",
+                "NNYYNNNNNNNNNNN",
+                "NNNNNYNNNNNYNNN",
+                "NNNNNNNNNNNNNNY",
+                "NNNNNNNNNNNNNNN",
+                "NNNNNNNNYNNNNNN",
+                "NNNNNNNNNNNNNNN",
+                "NNNNNNNNNNNNNNN",
+                "YNNYYNNNNYNNNNN"}),6);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

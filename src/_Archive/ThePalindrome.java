@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,30 +7,32 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class ToastXToast {
-    public int bake(int[] undertoasted, int[] overtoasted) {
+public class ThePalindrome {
+    public int find(String s) {
         int res;
-        sort(undertoasted);
-        sort(overtoasted);
-////        for (int i = 0; i < overtoasted.length; i++) {
-////            overtoasted[i] = i;
-//        }
-        if(undertoasted[0]>overtoasted[0])
-            return -1;
-        if(undertoasted[undertoasted.length-1]>overtoasted[overtoasted.length-1])
-            return -1;
-        if(undertoasted[undertoasted.length-1]<overtoasted[0])
-            return 1;
-        return 2;
+        StringBuffer ss = new StringBuffer(s).reverse();
+        if(s.equals(new StringBuffer(s).reverse().toString())){
+			return s.length();
+		}
+        String _s=s;
+        for (int i = ss.length()-1; i>0; i--) {
+			s=_s+ss.substring(i,ss.length());
+//			System.err.println(s);
+			if(s.equals(new StringBuffer(s).reverse().toString())){
+				return s.length();
+			}
+		}        
+        return -1;
     }
+    
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new ToastXToast()).bake(new int[] {2,4}, new int[] {5,6,3}),2);
-            eq(1,(new ToastXToast()).bake(new int[] {5}, new int[] {4}),-1);
-            eq(2,(new ToastXToast()).bake(new int[] {1,2,3}, new int[] {5,6,7}),1);
-            eq(3,(new ToastXToast()).bake(new int[] {1,3,5}, new int[] {2,4,6}),2);
+            eq(0,(new ThePalindrome()).find("abab"),5);
+            eq(1,(new ThePalindrome()).find("abacaba"),7);
+            eq(2,(new ThePalindrome()).find("qwerty"),11);
+            eq(3,(new ThePalindrome()).find("abdfhdyrbdbsdfghjkllkjhgfds"),38);
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

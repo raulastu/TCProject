@@ -1,3 +1,4 @@
+package _Archive;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -6,32 +7,38 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class ThePalindrome {
-    public int find(String s) {
-        int res;
-        StringBuffer ss = new StringBuffer(s).reverse();
-        if(s.equals(new StringBuffer(s).reverse().toString())){
-			return s.length();
-		}
-        String _s=s;
-        for (int i = ss.length()-1; i>0; i--) {
-			s=_s+ss.substring(i,ss.length());
-//			System.err.println(s);
-			if(s.equals(new StringBuffer(s).reverse().toString())){
-				return s.length();
-			}
-		}        
-        return -1;
+public class KingXNewBaby {
+	String name;
+    public String isValid(String name) {
+        String res;
+        this.name=name;
+        if(go("a") ||
+        		go("e") ||
+        		go("i") ||
+        		go("o") ||
+        		go("u") ){
+        	return "YES";
+        }                
+        return "NO";
     }
-    
+    boolean go(String v){
+    	String s = name.replaceAll("["+v+"]+", "");
+        if(s.length()==name.length()-2){
+        	if(s.length()==6)return true;
+        }
+        return false;
+    }
 
 // BEGIN CUT HERE
     public static void main(String[] args) {
         try {
-            eq(0,(new ThePalindrome()).find("abab"),5);
-            eq(1,(new ThePalindrome()).find("abacaba"),7);
-            eq(2,(new ThePalindrome()).find("qwerty"),11);
-            eq(3,(new ThePalindrome()).find("abdfhdyrbdbsdfghjkllkjhgfds"),38);
+            eq(0,(new KingXNewBaby()).isValid("dengklek"),"YES");
+            eq(1,(new KingXNewBaby()).isValid("gofushar"),"NO");
+            eq(2,(new KingXNewBaby()).isValid("dolphinigle"),"NO");
+            eq(3,(new KingXNewBaby()).isValid("mystictc"),"NO");
+            eq(4,(new KingXNewBaby()).isValid("rngringo"),"NO");
+            eq(5,(new KingXNewBaby()).isValid("misof"),"NO");
+            eq(6,(new KingXNewBaby()).isValid("metelsky"),"YES");
         } catch( Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);
