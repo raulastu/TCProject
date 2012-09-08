@@ -1,4 +1,4 @@
-package SRM_324_DIV_2;
+package SRM_324_2;
 
 // BEGIN CUT HERE
 // END CUT HERE
