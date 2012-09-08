@@ -157,7 +157,24 @@ $MAINBODY$
             System.err.println("[" + new String(a[i]) + "]");
         }
     }
+    
+    private static void printm(int[][] a) {
+    	System.err.println("");
+        for (int i = 0; i < a.length; i++) {
+        	String line = "";
+        	for (int j = 0; j < a[i].length; j++) {
+				line+=a[i][j]+" ";
+			}
+            System.err.println("[" + line.trim() + "]");
+        }
+        System.err.println("");
+    }
+    
     static String expected = "  expe";
     static String received = "  rChi";
 $ENDCUT$
 }
+
+$BEGINCUT$
+$PROBLEMDESC$
+$ENDCUT$
