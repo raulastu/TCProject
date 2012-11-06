@@ -1,4 +1,4 @@
-package HuaHCoding;
+package Judges_HuaHCoding;
 
 import java.io.File;
 import java.io.PrintWriter;

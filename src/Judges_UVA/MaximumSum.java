@@ -1,4 +1,4 @@
-package UVA;
+package Judges_UVA;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.max;
