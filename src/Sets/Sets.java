@@ -1,4 +1,4 @@
-package BFS;
+package Sets;
 
 import java.util.*;
 import java.util.ArrayList;
@@ -9,78 +9,151 @@ import static java.lang.Integer.*;
 import static java.lang.Double.*;
 import static java.util.Collections.*;
 
-public class GameOfEight {
+public class Sets {
 
-    public int fewestMoves(String[] board) {
-        Queue<ArrayList<String>> q = new LinkedList<ArrayList<String>>();
-        String init = "";
-        for (int i = 0; i < 3; i++) {
-            init += board[i];
+    class Node {
+
+        int cal, index, a, b, c;
+
+        public Node(int cal, int index, int a, int b, int c) {
+            this.cal = cal;
+            this.index = index;
+            this.a = a;
+            this.b = b;
+            this.c = c;
         }
-        Set<String> memo = new HashSet<String>();
-        memo.add(init);
-        ArrayList<String> l1 = new ArrayList<String>();
-        l1.add(init);
-        q.add(l1);
-        int[] di = {-1, 1, 0, 0};
-        int[] dj = {0, 0, -1, 1};
-        while (!q.isEmpty()) {
-            ArrayList<String> l = q.poll();
-            String p = l.get(l.size() - 1);
-            if (p.equals("12345678.")) {
-                return l.size() - 1;
-            }
-            int x = -1;
-            int y = -1;
-            for (int i = 0; i < p.length(); i++) {
-                if (p.charAt(i) == '.') {
-                    x = i / 3;
-                    y = i % 3;
-                    break;
-                }
-            }
-            int loc = x * 3 + y;
-            for (int i = 0; i < 4; i++) {
-                int X = x + di[i];
-                int Y = y + dj[i];
-                if (X >= 0 && X < 3 && Y >= 0 && Y < 3) {
-                    StringBuffer sb = new StringBuffer(p);
-                    sb.setCharAt(loc, sb.charAt(X * 3 + Y));
-                    sb.setCharAt(X * 3 + Y, '.');
-                    if (!memo.contains(sb + "")) {
-                        memo.add(sb + "");
-                        ArrayList<String> wl = new ArrayList<String>(l);
-                        wl.add(sb + "");
-                        q.add(wl);
-                    }
-                }
-            }
+
+        int totalVit() {
+            return a + b + c;
         }
-        return -1;
+
+        @Override
+        public String toString() {
+            return a + " " + b + " " + c + " " + cal;
+        }
     }
-// BEGIN CUT HERE
+
+    public int sets(int[] calories, int a[], int[] b, int c[]) {
+        ArrayList<Node> set = new ArrayList<Node>();
+        for (int i = 0; i < calories.length; i++) {
+            set.add(new Node(calories[i], i, a[i], b[i], c[i]));
+        }
+//        return genSubSets(0, set);
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        for (int i = 1; i <= 20; i++) {
+            al.add(i);
+        }
+
+        long ax = System.currentTimeMillis();
+        System.err.println(genSubSets2(0, new ArrayList<Node>(), set));
+        System.err.println("time:" + (System.currentTimeMillis() - ax));
+
+        ax = System.currentTimeMillis();
+        System.err.println(genSubSetsByBits(set));
+        System.err.println("time:" + (System.currentTimeMillis() - ax));
+        return 1;
+    }
+
+    int genSubSets(ArrayList al) {
+        int c = 0;
+        int len = al.size();
+//        int n = ;
+        for (int i = 0; i < (1 << al.size()); i++) {
+            ArrayList subset = new ArrayList();
+            for (int j = 0; j < al.size(); j++) {
+                if ((i & (1 << j)) > 0) {
+                    subset.add(al.get(j));
+                }
+            }
+            c++;
+        }
+        return c;
+    }
+
+    int genSubSetsByBits(ArrayList<Node> al) {
+        int c = 0;
+        int len = al.size();
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < (1 << al.size()); i++) {
+            ArrayList<Node> subset = new ArrayList<Node>();
+            for (int j = 0; j < al.size(); j++) {
+                if ((i & (1 << j)) > 0) {
+                    subset.add(al.get(j));
+                }
+            }
+            c++;
+            int va = 0, vb = 0, vc = 0;
+            int ca = 0;
+            for (Node node : subset) {
+                va += node.a;
+                vb += node.b;
+                vc += node.c;
+                ca += node.cal;
+            }
+            if (va >= 100 && vb >= 100 && vc >= 100) {
+                res = min(res, ca);
+            }
+//            System.err.println(subset);
+        }
+        return res;
+    }
+
+    int genSubSets2(int i, ArrayList<Node> tempset, ArrayList<Node> al) {
+        if (al.size() == i) {
+//            System.err.println(tempset);
+            int va = 0, vb = 0, vc = 0;
+            int ca = 0;
+            for (Node node : tempset) {
+                va += node.a;
+                vb += node.b;
+                vc += node.c;
+                ca += node.cal;
+            }
+            if (va >= 100 && vb >= 100 && vc >= 100) {
+                return ca;
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+        ArrayList<Node> tempset1 = new ArrayList<Node>(tempset);
+        tempset1.add(al.get(i));
+        ArrayList<Node> tempset2 = new ArrayList<Node>(tempset);
+        int va = 0, vb = 0, vc = 0, cal = 0;
+        for (Node node : tempset) {
+            va += node.a;
+            vb += node.b;
+            vc += node.c;
+            cal += node.cal;
+        }
+        if (va >= 100 && vb >= 100 && vc >= 100) {
+            return cal;
+        } else {
+            int b = genSubSets2(i + 1, tempset1, al);
+            int s = genSubSets2(i + 1, tempset2, al);
+            return min(s, b);
+        }
+    }
+
+    int genSubSets(int i, ArrayList<Integer> tempset, ArrayList<Integer> al) {
+        if (al.size() == i) {
+            return 1;
+        }
+        ArrayList<Integer> tempset1 = new ArrayList<Integer>(tempset);
+        tempset1.add(al.get(i));
+        ArrayList<Integer> tempset2 = new ArrayList<Integer>(tempset);
+        return genSubSets(i + 1, tempset2, al) + genSubSets(i + 1, tempset1, al);
+    }
 
     public static void main(String[] args) {
-        try {
-            long a = System.currentTimeMillis();
-            eq(2, (new GameOfEight()).fewestMoves(new String[]{".23",
-                        "456",
-                        "781"}), -1);
-            System.err.println(System.currentTimeMillis() - a);
-            eq(0, (new GameOfEight()).fewestMoves(new String[]{"123",
-                        "485",
-                        "76."}), 4);
-            eq(1, (new GameOfEight()).fewestMoves(new String[]{"123",
-                        "456",
-                        "78."}), 0);
-            eq(1, (new GameOfEight()).fewestMoves(new String[]{"234",
-                        "15.",
-                        "768"}), 0);
-
-        } catch (Exception exx) {
-            System.err.println(exx);
-            exx.printStackTrace(System.err);
+//        eq(0, new Sets().sets(new int[]{28, 23, 6, 42, 496}, new int[]{20, 69, 90, 10, 100},
+//                new int[]{33, 33, 33, 40, 100}, new int[]{98, 1, 1, 1, 100}), 76);
+        int[][] cal = new int[4][20];
+        for (int i = 0; i < cal.length; i++) {
+            for (int j = 0; j < cal[i].length; j++) {
+                cal[i][j] = 5;
+            }
         }
+        eq(0, new Sets().sets(cal[0], cal[1], cal[2], cal[3]), 76);
     }
 
     private static void eq(int n, int a, int b) {
@@ -212,5 +285,4 @@ public class GameOfEight {
     }
     static String expected = "  expe";
     static String received = "  rChi";
-// END CUT HERE
 }

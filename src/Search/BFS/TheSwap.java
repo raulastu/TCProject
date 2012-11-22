@@ -1,4 +1,4 @@
-package BFS;
+package Search.BFS;
 
 // BEGIN CUT HERE
 // END CUT HERE
@@ -11,38 +11,64 @@ import static java.lang.Integer.*;
 import static java.lang.Double.*;
 import static java.util.Collections.*;
 
-public class TheSwap_sol2 {
+public class TheSwap {
 
     public int findMax(int n, int k) {
-    	char [] c = (n+"").toCharArray();
-    	int res = go(0,0,c,k);
-        return res;
-    }
-    int go(int i, int j, char[] nn, int k){
-//    	char [] nn = (n+"").toCharArray();
-    	if(k==0)
-    		return Integer.parseInt(new String(nn));
-    	int res = 0;
-    	if(nn[j]!='0'){
-    		char ci = nn[i];
-        	nn[i]=nn[j];
-        	nn[j]=ci;
-        	for (int l = i-1; l < nn.length; l++) {
-				res = max(res,go(l,j,nn,k-1));
-			}
-    	}
-    	return res;
+        int res;
+        HashSet<String> memo[] = new HashSet[k + 1];
+//        int memo[][] = new int[100000][1]
+        String init = n + "";
+        Queue<ArrayList<String>> q = new LinkedList<ArrayList<String>>();
+        for (int i = 0; i < memo.length; i++) {
+            memo[i] = new HashSet<String>();
+        }
+        int max = -1;
+        ArrayList<String> l = new ArrayList<String>();
+        l.add(init);
+        q.add(l);
+        while (!q.isEmpty()) {
+            l = q.poll();
+            if (l.size() > k) {
+                break;
+            }
+            String p = l.get(l.size() - 1);
+
+            for (int i = 0; i < p.length(); i++) {
+                for (int j = 0; j < p.length(); j++) {
+                    if (i != j) {
+                        StringBuffer sb = new StringBuffer(p);
+                        char t = sb.charAt(i);
+                        sb.setCharAt(i, sb.charAt(j));
+                        sb.setCharAt(j, t);
+                        int x = Integer.parseInt(sb + "");
+                        if (sb.charAt(0) != '0' && !memo[l.size() - 1].contains(sb + "")) {
+                            memo[l.size() - 1].add(sb + "");
+                            ArrayList<String> wl = new ArrayList<String>(l);
+                            wl.add(sb + "");
+//                            System.err.println(l);
+                            q.add(wl);
+                        }
+                    }
+                }
+            }
+        }
+        max = -1;
+//        System.err.println(q);
+        for (String xx : memo[k - 1]) {
+            max = max(max, Integer.parseInt(xx));
+        }
+        return max;
     }
 // BEGIN CUT HERE
 
     public static void main(String[] args) {
         try {
-            eq(0, (new TheSwap_sol2()).findMax(16375, 1), 76315);
-            eq(1, (new TheSwap_sol2()).findMax(432, 1), 423);
-            eq(2, (new TheSwap_sol2()).findMax(90, 4), -1);
-            eq(3, (new TheSwap_sol2()).findMax(5, 2), -1);
-            eq(4, (new TheSwap_sol2()).findMax(436659, 2), 966354);
-            eq(4, (new TheSwap_sol2()).findMax(45, 7), 54);
+            eq(0, (new TheSwap()).findMax(16375, 1), 76315);
+            eq(1, (new TheSwap()).findMax(432, 1), 423);
+            eq(2, (new TheSwap()).findMax(90, 4), -1);
+            eq(3, (new TheSwap()).findMax(5, 2), -1);
+            eq(4, (new TheSwap()).findMax(436659, 2), 966354);
+            eq(4, (new TheSwap()).findMax(45, 7), 54);
         } catch (Exception exx) {
             System.err.println(exx);
             exx.printStackTrace(System.err);

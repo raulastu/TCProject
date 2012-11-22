@@ -1,4 +1,4 @@
-package BFS;
+package Search.BFS;
 
 // BEGIN CUT HERE
 // END CUT HERE
