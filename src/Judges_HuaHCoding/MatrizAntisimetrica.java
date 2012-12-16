@@ -3,29 +3,36 @@ package Judges_HuaHCoding;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 import static java.lang.Math.*;
 
-public class Acronimo {
+public class MatrizAntisimetrica {
 	static String solve(String line) {
 		String[] l = line.split(" +");
-		String res="";
-		for (String string : l) {
-			if(string.equals("the")||
-					string.equals("of") ||
-					string.equals("and") ||
-					string.equals("")){
-				
-			}else{
-				res+=(string.toCharArray()[0]+"").toUpperCase();
+		int n= (int)Math.sqrt(l.length);
+		int [][] m = new int[n][n];
+		for (int i = 0; i < l.length; i++) {
+			m[(int)(i/n)][i%n]=Integer.parseInt(l[i]);
+		}
+		int r=0;
+		for (int i = 0; i < m.length; i++) {
+			for (int j = 0; j < m.length; j++) {
+				if(i!=j && m[i][j]!=-m[j][i])
+					r++;
 			}
 		}
-				
-		return res;
+		r=r/2;
+		for (int i = 0; i < m.length; i++) {
+			if(m[i][i]!=0)
+				r++;
+		}
+//		printm(m);
+		return r+"";
 	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(new File("/Users/rc/test1/acr.txt"));
+		Scanner sc = new Scanner(new File("/Users/rc/test1/Matriz Antisimetrica_in.txt"));
 //		Scanner sc = new Scanner(new File("/Users/rc/git/TCProject/src/Judges_HuaHCoding/input_temp_case"));
 //		Scanner sc = new Scanner(System.in);
 		String writtenFile = "/Users/rc/test1/out.txt";
@@ -42,5 +49,11 @@ public class Acronimo {
 		System.err.println(writtenFile);
 		sc.close();
 		pw.close();
+	}
+	static void print(Object... ob){
+		System.err.println(Arrays.deepToString(ob));
+	}
+	static void printm(Object... ob){
+		System.err.println(Arrays.deepToString(ob).replace("]", "]\n"));
 	}
 }

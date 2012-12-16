@@ -6,19 +6,19 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class FoxAndTouristFamilies {
-   public double expectedLength(int[] A, int[] B, int[] f) {
-	   
+public class RandomOption {
+   public double getProbability(int keyCount, int[] badLane1, int[] badLane2) {
+
    }
 
 
 // BEGIN CUT HERE
    public static void main(String[] args) {
 		if (args.length == 0) {
-			FoxAndTouristFamiliesHarness.run_test(-1);
+			RandomOptionHarness.run_test(-1);
 		} else {
 			for (int i=0; i<args.length; ++i)
-				FoxAndTouristFamiliesHarness.run_test(Integer.valueOf(args[i]));
+				RandomOptionHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
 
@@ -55,7 +55,7 @@ public class FoxAndTouristFamilies {
 }
 
 // BEGIN CUT HERE
-class FoxAndTouristFamiliesHarness {
+class RandomOptionHarness {
 	public static void run_test(int casenum) {
 		if (casenum != -1) {
 			if (runTestCase(casenum) == -1)
@@ -110,95 +110,71 @@ class FoxAndTouristFamiliesHarness {
 	static int runTestCase(int casenum__) {
 		switch(casenum__) {
 		case 0: {
-			int[] A                   = {0, 1};
-			int[] B                   = {1, 2};
-			int[] f                   = {0};
-			double expected__         = 1.5;
+			int keyCount              = 5;
+			int[] badLane1            = {0};
+			int[] badLane2            = {3};
+			double expected__         = 0.6;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}
 		case 1: {
-			int[] A                   = {0, 1};
-			int[] B                   = {1, 2};
-			int[] f                   = {0, 0};
-			double expected__         = 1.25;
+			int keyCount              = 5;
+			int[] badLane1            = {0, 1, 2};
+			int[] badLane2            = {1, 2, 0};
+			double expected__         = 0.1;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}
 		case 2: {
-			int[] A                   = {0, 1};
-			int[] B                   = {1, 2};
-			int[] f                   = {0, 1};
-			double expected__         = 0.75;
+			int keyCount              = 5;
+			int[] badLane1            = {2, 2, 2, 2};
+			int[] badLane2            = {0, 1, 3, 4};
+			double expected__         = 0.0;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}
 		case 3: {
-			int[] A                   = {0, 1};
-			int[] B                   = {1, 2};
-			int[] f                   = {0, 2};
-			double expected__         = 1.0;
+			int keyCount              = 7;
+			int[] badLane1            = {0, 1, 2};
+			int[] badLane2            = {6, 5, 4};
+			double expected__         = 0.3904761904761904;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}
 		case 4: {
-			int[] A                   = {0,0,0};
-			int[] B                   = {1,2,3};
-			int[] f                   = {0};
-			double expected__         = 1.0;
+			int keyCount              = 7;
+			int[] badLane1            = {3, 5, 1, 0, 2, 6, 4};
+			int[] badLane2            = {0, 2, 4, 6, 1, 5, 3};
+			double expected__         = 0.09166666666666667;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
-		}
-		case 5: {
-			int[] A                   = {0,0,0};
-			int[] B                   = {1,2,3};
-			int[] f                   = {1,2};
-			double expected__         = 0.7777777777777777;
-
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
-		}
-		case 6: {
-			int[] A                   = {0,1,1,3,5,6};
-			int[] B                   = {1,2,3,4,4,4};
-			int[] f                   = {5,6,1};
-			double expected__         = 0.4537037037037037;
-
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
-		}
-		case 7: {
-			int[] A                   = {0,1,2,3,4,5,6,7,8,9};
-			int[] B                   = {1,2,3,4,5,6,7,8,9,10};
-			int[] f                   = {0,0,0,0,0,0,0,0,0,0};
-			double expected__         = 1.4914341925000003;
-
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}
 
 		// custom cases
 
-/*      case 8: {
-			int[] A                   = ;
-			int[] B                   = ;
-			int[] f                   = ;
+/*      case 5: {
+			int keyCount              = ;
+			int[] badLane1            = ;
+			int[] badLane2            = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}*/
-/*      case 9: {
-			int[] A                   = ;
-			int[] B                   = ;
-			int[] f                   = ;
+/*      case 6: {
+			int keyCount              = ;
+			int[] badLane1            = ;
+			int[] badLane2            = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}*/
-/*      case 10: {
-			int[] A                   = ;
-			int[] B                   = ;
-			int[] f                   = ;
+/*      case 7: {
+			int keyCount              = ;
+			int[] badLane1            = ;
+			int[] badLane2            = ;
 			double expected__         = ;
 
-			return verifyCase(casenum__, expected__, new FoxAndTouristFamilies().expectedLength(A, B, f));
+			return verifyCase(casenum__, expected__, new RandomOption().getProbability(keyCount, badLane1, badLane2));
 		}*/
 		default:
 			return -1;

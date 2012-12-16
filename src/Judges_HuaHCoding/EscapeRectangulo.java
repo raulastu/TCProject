@@ -12,7 +12,7 @@ public class EscapeRectangulo {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(new File("/Users/rc/test1/Escape del Rectangulo_in (9).txt"));
+		Scanner sc = new Scanner(new File("/Users/rc/test1/Escape del Rectangulo_in (10).txt"));
 //		Scanner sc = new Scanner(new File("/Users/rc/git/TCProject/src/Judges_HuaHCoding/input_temp_case"));
 //		Scanner sc = new Scanner(System.in);
 		String writtenFile = "/Users/rc/test1/out.txt";
