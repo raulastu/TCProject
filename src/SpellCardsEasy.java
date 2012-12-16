@@ -36,7 +36,6 @@ public class SpellCardsEasy {
 			else {
 				tns();
 				// do not use the card
-//				tl+="[";
 				res = go(p + 1, max(0, owed - 1));
 				// use the card
 				// int b = 0;
@@ -47,12 +46,9 @@ public class SpellCardsEasy {
 				// res = max(b, a);
 			}
 			dp[p][owed] = res;
-		}
-		else{
+		}else{
 			tb();
 		}
-//		tl+="]";
-		
 		return dp[p][owed];
 	}
 	
@@ -70,10 +66,10 @@ public class SpellCardsEasy {
 		System.err.println(Arrays.deepToString(rs).replace("]", "]\n"));
 	}
 	
-	static String tl="";
+	private static String tl="";
 	private static void printTree() {
 		try{
-			String[] drawing = new TreeDrawing().draw(new String[]{tl});
+			String[] drawing = new Util.treeDrawing.TreeDrawing().draw(new String[]{tl});
 			System.err.println(Arrays.deepToString(drawing).replaceAll("\\[|\\]", "").replaceAll(", ", "\n")+"\n");
 			tl="";
 		}catch (Exception ex){
@@ -84,7 +80,8 @@ public class SpellCardsEasy {
 	private static void tb(){tl+="[]";}
 	private static void tns(){tl+="[";}
 	private static void tne(){tl+="]";}
-
+	
+	
 	private static void printm(String[] a) {
 		for (int i = 0; i < a.length; i++) {
 			System.err.println("[" + a[i] + "]");
