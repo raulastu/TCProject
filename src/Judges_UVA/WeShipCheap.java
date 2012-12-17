@@ -111,9 +111,6 @@ public class WeShipCheap {
 	}
 	
 	static void print(Object... ob){
-		System.out.println(Arrays.deepToString(ob));
-	}
-	static void printm(Object... ob){
 		System.out.println(Arrays.deepToString(ob).replace("],", "],\n"));
 	}
 }
