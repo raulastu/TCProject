@@ -10,14 +10,14 @@ public class Fib {
 
 	
 	public static long fib(long n){
-		tn(n);
+		tn(n);//tree node
 		if(n==0 || n==1){
-			tb();
+			tb();//tree node base case
 			return 0;
 		}
-		tns();
+		tns();//tree node start
 		long x = fib(n-1)+fib(n-2);
-		tne();
+		tne();//tree node end
 		return x; 
 	}
 	
