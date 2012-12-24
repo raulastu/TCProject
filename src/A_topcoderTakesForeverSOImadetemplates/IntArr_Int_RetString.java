@@ -27,6 +27,7 @@ public class IntArr_Int_RetString {
     int max = 0;
     String [][] fuck;
 
+    
     String go(int i, int n, String s) {
         if (n < 0) {
             System.err.println("nn"+i);
@@ -49,6 +50,7 @@ public class IntArr_Int_RetString {
         return res;
     }
 
+    
     int dif(String a, String b) {
 //        a = a.replaceAll("^0+", "");
 //        b = b.replaceAll("^0+", "");

@@ -9,7 +9,7 @@ import java.util.*;
 
 public class TreeDrawing {
 	int n;
-	int NN=200;
+	int NN=1000;
 	String nodeNames[] = new String[NN];
 	int leftChild[] = new int[NN];
 	int rightChild[] = new int[NN];

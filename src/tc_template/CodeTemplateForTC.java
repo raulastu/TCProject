@@ -6,6 +6,8 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
+import Util.treeDrawing.TreeDrawing;
+
 public class $CLASSNAME$ {
     public $RC$ $METHODNAME$($METHODPARMS$) {
         $RC$ res;
@@ -13,6 +15,27 @@ public class $CLASSNAME$ {
     }
 $WRITERCODE$
 $BEGINCUT$
+
+	private static void print(Object... rs) {
+		System.err.println(Arrays.deepToString(rs).replace("]", "]\n"));
+	}
+	
+	static String tl="";
+	private static void printTree() {
+		try{
+			String[] drawing = new Util.treeDrawing.TreeDrawing().draw(new String[]{tl});
+			System.err.println(Arrays.deepToString(drawing).replaceAll("\\[|\\]", "").replaceAll(", ", "\n")+"\n");
+		}catch (Exception ex){
+			System.err.println("invalid tree>"+tl);
+		}	
+		tl="";
+	}
+	private static void tn(Object...o){tl+="("+Arrays.deepToString(o).replaceAll(" |\\[|\\]", "")+")";}
+	private static void tb(){tl+="[]";}
+	private static void tns(){tl+="[";}
+	private static void tne(){tl+="]";}
+
+
     public static void main(String[] args) {
         try {
 $MAINBODY$
@@ -142,33 +165,6 @@ $MAINBODY$
     }
 
 
-    private static void print(Object... rs) {
-        System.err.println(Arrays.deepToString(rs));
-    }
-
-    private static void printm(String[] a) {
-        for (int i = 0; i < a.length; i++) {
-            System.err.println("[" + a[i] + "]");
-        }
-    }
-
-    private static void printm(char[][] a) {
-        for (int i = 0; i < a.length; i++) {
-            System.err.println("[" + new String(a[i]) + "]");
-        }
-    }
-    
-    private static void printm(int[][] a) {
-    	System.err.println("");
-        for (int i = 0; i < a.length; i++) {
-        	String line = "";
-        	for (int j = 0; j < a[i].length; j++) {
-				line+=a[i][j]+" ";
-			}
-            System.err.println("[" + line.trim() + "]");
-        }
-        System.err.println("");
-    }
     
     static String expected = "  expe";
     static String received = "  rChi";

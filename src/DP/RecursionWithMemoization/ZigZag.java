@@ -1,4 +1,4 @@
-import java.math.BigInteger;
+package DP.RecursionWithMemoization;
 import java.util.regex.*;
 import static java.lang.Math.*;
 import static java.util.Arrays.*;
@@ -7,48 +7,57 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class ChessMatchup {
-	public int maximumScore(int[] array1, int[] array2) {
-		Arrays.sort(array1);
-		Arrays.sort(array2);
-		int mayot = 0;
-		for (int j2 = 0; j2 < array2.length; j2++) {
-
-			int suma = 0;
-			for (int j = 0; j < array2.length; j++) {
-				if (array1[j] > array2[j]) {
-					suma += 2;
-				} else if (array1[j] < array2[j]) {
-					suma += 0;
-
-				} else if (array1[j] == array2[j]) {
-					suma += 1;
-				}
-
+public class ZigZag {
+	public int longestZigZag(int[] sequence) {
+		
+		seq=sequence;
+		dp=new int[seq.length+1][seq.length+1][2];
+		
+		if(sequence.length==1)
+			return 1;
+		for (int i = 0; i < dp.length; i++) {
+			for (int j = 0; j < dp[i].length; j++) {
+				fill(dp[i][j],-1);
 			}
-			mayot = Math.max(mayot, suma);
-
-			if (array1.length > 1)
-				for (int j3 = 0; j3 < array2.length - 1; j3++) {
-
-					int temp = array1[j3];
-					array1[j3] = array1[j3 + 1];
-					array1[j3 + 1] = temp;
-
-				}
-
 		}
-		return mayot;
+		int a = 1+go(1,0,0);
+		for (int i = 0; i < dp.length; i++) {
+			for (int j = 0; j < dp[i].length; j++) {
+				fill(dp[i][j],-1);
+			}
+		}
+		int b = 1+go(1,0,1);
+		return max(a,b);
+	}
+	int dp[][][];
+	int[] seq;
 
+	int go(int i, int j, int k) {
+		if(i==seq.length || j==seq.length)
+			return 0;
+		if (dp[i][j][k]== -1) {
+			int res = go(i + 1, j, k);
+			if (k==0) {
+				if (seq[i] > seq[j]) {
+					res = max(res, 1 + go(i + 1, i, k==1?0:1));
+				}
+			} else {
+				if (seq[i] < seq[j]) {
+					res = max(res, 1 + go(i + 1, i, k==1?0:1));
+				}
+			}
+			dp[i][j][k]=res;
+		}
+		return dp[i][j][k];
 	}
 
 	// BEGIN CUT HERE
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			ChessMatchupHarness.run_test(-1);
+			ZigZagHarness.run_test(-1);
 		} else {
 			for (int i = 0; i < args.length; ++i)
-				ChessMatchupHarness.run_test(Integer.valueOf(args[i]));
+				ZigZagHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
 
@@ -84,7 +93,7 @@ public class ChessMatchup {
 }
 
 // BEGIN CUT HERE
-class ChessMatchupHarness {
+class ZigZagHarness {
 	public static void run_test(int casenum) {
 		if (casenum != -1) {
 			if (runTestCase(casenum) == -1)
@@ -139,57 +148,72 @@ class ChessMatchupHarness {
 	static int runTestCase(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			int[] us = { 5, 8 };
-			int[] them = { 7, 3 };
-			int expected__ = 4;
+			int[] sequence = { 1, 7, 4, 9, 2, 5 };
+			int expected__ = 6;
 
 			return verifyCase(casenum__, expected__,
-					new ChessMatchup().maximumScore(us, them));
+					new ZigZag().longestZigZag(sequence));
 		}
 		case 1: {
-			int[] us = { 7, 3 };
-			int[] them = { 5, 8 };
+			int[] sequence = { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 };
+			int expected__ = 7;
+
+			return verifyCase(casenum__, expected__,
+					new ZigZag().longestZigZag(sequence));
+		}
+		case 2: {
+			int[] sequence = { 44 };
+			int expected__ = 1;
+
+			return verifyCase(casenum__, expected__,
+					new ZigZag().longestZigZag(sequence));
+		}
+		case 3: {
+			int[] sequence = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 			int expected__ = 2;
 
 			return verifyCase(casenum__, expected__,
-					new ChessMatchup().maximumScore(us, them));
+					new ZigZag().longestZigZag(sequence));
 		}
-		case 2: {
-			int[] us = { 10, 5, 1 };
-			int[] them = { 10, 5, 1 };
-			int expected__ = 4;
+		case 4: {
+			int[] sequence = { 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 100, 19,
+					7, 5, 5, 5, 1000, 32, 32 };
+			int expected__ = 8;
 
 			return verifyCase(casenum__, expected__,
-					new ChessMatchup().maximumScore(us, them));
+					new ZigZag().longestZigZag(sequence));
 		}
-		case 3: {
-			int[] us = { 1, 10, 7, 4 };
-			int[] them = { 15, 3, 8, 7 };
-			int expected__ = 5;
+		case 5: {
+			int[] sequence = { 374, 40, 854, 203, 203, 156, 362, 279, 812, 955,
+					600, 947, 978, 46, 100, 953, 670, 862, 568, 188, 67, 669,
+					810, 704, 52, 861, 49, 640, 370, 908, 477, 245, 413, 109,
+					659, 401, 483, 308, 609, 120, 249, 22, 176, 279, 23, 22,
+					617, 462, 459, 244 };
+			int expected__ = 36;
 
 			return verifyCase(casenum__, expected__,
-					new ChessMatchup().maximumScore(us, them));
+					new ZigZag().longestZigZag(sequence));
 		}
 
 		// custom cases
 
 		/*
-		 * case 4: { int[] us = ; int[] them = ; int expected__ = ;
+		 * case 6: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * ChessMatchup().maximumScore(us, them)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		/*
-		 * case 5: { int[] us = ; int[] them = ; int expected__ = ;
+		 * case 7: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * ChessMatchup().maximumScore(us, them)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		/*
-		 * case 6: { int[] us = ; int[] them = ; int expected__ = ;
+		 * case 8: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * ChessMatchup().maximumScore(us, them)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		default:
 			return -1;
