@@ -1,4 +1,4 @@
-package Judges_UVA;
+package judges.UVA;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.min;

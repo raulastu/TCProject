@@ -16,7 +16,7 @@ public class _Template {
 	public void solve() {
 		int N = readInt();
 		if (N <= 2) {
-			System.out.println(N);
+			out.println(N);
 			return;
 		}
 		int r = 0;
@@ -68,7 +68,7 @@ public class _Template {
 				r = Math.max(r, rr);
 			}
 		}
-		System.out.println(r);
+		out.println(r);
 	}
 	_Template(){
 		in = new Scanner(System.in);
@@ -97,6 +97,7 @@ public class _Template {
 		}
 		return r;
 	}
+	
 	static void print(Object... ob) {
 		System.out.println(Arrays.deepToString(ob).replace("],", "],\n"));
 	}

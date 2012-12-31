@@ -1,4 +1,3 @@
-package DP.RecursionWithMemoization;
 import java.util.regex.*;
 
 import static java.lang.Math.*;
@@ -11,36 +10,36 @@ import java.util.*;
 public class BadNeighbors {
 	public int maxDonations(int[] donations) {
 		don=donations;
-		N = donations.length;
-		memo=new int[N];
-//		print(N);
-		fill(memo,-1);
-		int a = go(1);
-		N--;
-		fill(memo,-1);
-		int b = go(0);
+		int N = donations.length;
+		int a = go(1,N);
+		int b = go(0,N-1);
+//		int c = go(1,N-1);
+//		return max(c,max(a,b));
 		return max(a,b);
 	}
-	int don[];
-	int memo[];
-	int N;
-	int go(int i){
-		if(i>=N)
-			return 0;
-		if(memo[i]==-1){
-			int r = go(i+1);
-			r = max(r,don[i]+go(i+2));
-			memo[i]=r;
+	
+	int []don;
+	int go(int ix, int N){
+		int dp[]= new int[N];
+		for (int i = ix; i < N; i++) {
+			dp[i]=don[i];
+			for (int j = ix; j <= i; j++) {
+				if(i-j>1)
+					dp[i]=max(dp[i],dp[j]+don[i]);
+			}
+			
 		}
-		return memo[i];
+		print(dp,don);
+		sort(dp);
+		return dp[N-1];
 	}
 	// BEGIN CUT HERE
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			BadNeighbors2Harness.run_test(-1);
+			BadNeighborsHarness.run_test(-1);
 		} else {
 			for (int i = 0; i < args.length; ++i)
-				BadNeighbors2Harness.run_test(Integer.valueOf(args[i]));
+				BadNeighborsHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
 
@@ -145,7 +144,20 @@ class BadNeighborsHarness {
 			return verifyCase(casenum__, expected__,
 					new BadNeighbors().maxDonations(donations));
 		}
+		case 5: {
+			int[] donations = {836, 100, 274, 931, 632, 817, 951, 992, 17, 349, 189, 99, 77, 316, 698, 10, 732, 3, 2, 445, 524, 343, 953, 513, 459};
+			int expected__ = 6933;
 
+			return verifyCase(casenum__, expected__,
+					new BadNeighbors().maxDonations(donations));
+		}
+		case 6: {
+			int[] donations = {1,10,23,10,1};
+			int expected__ = 24;
+
+			return verifyCase(casenum__, expected__,
+					new BadNeighbors().maxDonations(donations));
+		}
 		// custom cases
 
 		/*

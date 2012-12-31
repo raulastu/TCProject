@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Fib {
 	public static void main(String[] args) {
-		fib(9);
+		fib(5);
 		printTree();
 	}
 

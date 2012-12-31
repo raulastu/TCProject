@@ -1,4 +1,4 @@
-package Judges_UVA;
+package judges.UVA;
 import static java.lang.Integer.parseInt;
 import java.io.PrintWriter;
 import java.util.Arrays;

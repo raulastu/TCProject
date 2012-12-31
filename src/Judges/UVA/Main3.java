@@ -1,4 +1,4 @@
-package Judges_UVA;
+package judges.UVA;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

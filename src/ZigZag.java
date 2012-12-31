@@ -6,50 +6,28 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class MonstersValley2 {
-	final long INF = 51 * 1000000000000L;
+public class ZigZag {
+	public int longestZigZag(int[] sequence) {
+		if (sequence.length == 1)
+			return 1;
+		int N = sequence.length;
+		int S[] = new int[N];
+		int S2[] = new int[N];
+		fill(S, 1);
+		fill(S2, 1);
 
-	public int minimumPrice(int[] dread, int[] price) {
-		int n = dread.length;
-		long[][] maxDread = new long[2 * n + 1][n + 1];
-		// maxDread[p][t] : Maximum dread we can get out of the first
-		// t monsters when we have p price units
-		// available to spend. Negative if impossible.
-		//
-
-		for (int p = 0; p <= 2 * n; p++) {
-			maxDread[p][0] = 0;
-			
-			for (int i = 1; i <= n; i++) {
-				maxDread[p][i] = -INF;
-				// bribe the monster
-				if (p >= price[i - 1]) {
-					maxDread[p][i] = maxDread[p - price[i - 1]][i - 1] + dread[i - 1];
-					print("bribe");
-					print(maxDread);
+		for (int i = 1; i < N; i++) {
+			for (int j = 0; j < i; j++) {
+				if (sequence[j] < sequence[i]) {
+					S[i] = max(S[i], S2[j] + 1);
+				}else if (sequence[j] > sequence[i]) {
+					S2[i] = max(S2[i], S[j] + 1);
 				}
-				
-				// Do not bribe the monster
-				if (maxDread[p][i - 1] >= dread[i - 1]) {
-					maxDread[p][i] = Math.max(maxDread[p][i],maxDread[p][i - 1]);
-					print("dont bribe");
-					print(maxDread);
-				}
-				
 			}
+			print(sequence, S, S2);
 		}
-		// Pick the minimum price that yields a valid maximum dread:
-		for (int p = 0; p <= 2 * n; p++) {
-			if (maxDread[p][n] >= 0) {
-				return p;
-			}
-		}
-		return 2 * n;
+		return max(S[N - 1], S2[N - 1]);
 	}
-
-	int dp[][];
-	int prices[];
-	int dread[];
 
 	// BEGIN CUT HERE
 
@@ -90,10 +68,10 @@ public class MonstersValley2 {
 
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			MonstersValley2Harness.run_test(-1);
+			ZigZagHarness.run_test(-1);
 		} else {
 			for (int i = 0; i < args.length; ++i)
-				MonstersValley2Harness.run_test(Integer.valueOf(args[i]));
+				ZigZagHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
 
@@ -101,7 +79,7 @@ public class MonstersValley2 {
 }
 
 // BEGIN CUT HERE
-class MonstersValley2Harness {
+class ZigZagHarness {
 	public static void run_test(int casenum) {
 		if (casenum != -1) {
 			if (runTestCase(casenum) == -1)
@@ -156,68 +134,79 @@ class MonstersValley2Harness {
 	static int runTestCase(int casenum__) {
 		switch (casenum__) {
 		case 0: {
-			int[] dread = { 8, 5, 10 };
-			int[] price = { 1, 1, 2 };
-			int expected__ = 2;
+			int[] sequence = { 1, 7, 4, 9, 2, 5 };
+			int expected__ = 6;
 
 			return verifyCase(casenum__, expected__,
-					new MonstersValley2().minimumPrice(dread, price));
+					new ZigZag().longestZigZag(sequence));
 		}
 		case 1: {
-			int[] dread = { 1, 2, 4, 1000000000 };
-			int[] price = { 1, 1, 1, 2 };
-			int expected__ = 5;
+			int[] sequence = { 1, 17, 5, 10, 13, 15, 10, 5, 16, 8 };
+			int expected__ = 7;
 
 			return verifyCase(casenum__, expected__,
-					new MonstersValley2().minimumPrice(dread, price));
+					new ZigZag().longestZigZag(sequence));
 		}
 		case 2: {
-			int[] dread = { 200, 107, 105, 206, 307, 400 };
-			int[] price = { 1, 2, 1, 1, 1, 2 };
+			int[] sequence = { 44 };
+			int expected__ = 1;
+
+			return verifyCase(casenum__, expected__,
+					new ZigZag().longestZigZag(sequence));
+		}
+		case 3: {
+			int[] sequence = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 			int expected__ = 2;
 
 			return verifyCase(casenum__, expected__,
-					new MonstersValley2().minimumPrice(dread, price));
-		}
-		case 3: {
-			int[] dread = { 5216, 12512, 613, 1256, 66, 17202, 30000, 23512,
-					2125, 33333 };
-			int[] price = { 2, 2, 1, 1, 1, 1, 2, 1, 2, 1 };
-			int expected__ = 5;
-
-			return verifyCase(casenum__, expected__,
-					new MonstersValley2().minimumPrice(dread, price));
+					new ZigZag().longestZigZag(sequence));
 		}
 		case 4: {
-			int d = 2000000000;
-			int[] dread = { d - 1, d, d };
-			// fill(dread,d);
-			int[] price = { 2, 2, 2 };
-			int expected__ = 4;
+			int[] sequence = { 70, 55, 13, 2, 99, 2, 80, 80, 80, 80, 100, 19,
+					7, 5, 5, 5, 1000, 32, 32 };
+			int expected__ = 8;
 
 			return verifyCase(casenum__, expected__,
-					new MonstersValley2().minimumPrice(dread, price));
+					new ZigZag().longestZigZag(sequence));
+		}
+		case 5: {
+			int[] sequence = { 374, 40, 854, 203, 203, 156, 362, 279, 812, 955,
+					600, 947, 978, 46, 100, 953, 670, 862, 568, 188, 67, 669,
+					810, 704, 52, 861, 49, 640, 370, 908, 477, 245, 413, 109,
+					659, 401, 483, 308, 609, 120, 249, 22, 176, 279, 23, 22,
+					617, 462, 459, 244 };
+			int expected__ = 36;
+
+			return verifyCase(casenum__, expected__,
+					new ZigZag().longestZigZag(sequence));
+		}
+		case 6: {
+			int[] sequence = { 3, 3, 3, 3 };
+			int expected__ = 1;
+
+			return verifyCase(casenum__, expected__,
+					new ZigZag().longestZigZag(sequence));
 		}
 
 		// custom cases
 
 		/*
-		 * case 4: { int[] dread = ; int[] price = ; int expected__ = ;
+		 * case 6: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * MonstersValley2().minimumPrice(dread, price)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		/*
-		 * case 5: { int[] dread = ; int[] price = ; int expected__ = ;
+		 * case 7: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * MonstersValley2().minimumPrice(dread, price)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		/*
-		 * case 6: { int[] dread = ; int[] price = ; int expected__ = ;
+		 * case 8: { int[] sequence = ; int expected__ = ;
 		 * 
 		 * return verifyCase(casenum__, expected__, new
-		 * MonstersValley2().minimumPrice(dread, price)); }
+		 * ZigZag().longestZigZag(sequence)); }
 		 */
 		default:
 			return -1;

@@ -8,52 +8,48 @@ import static java.lang.Double.*;
 import static java.util.Collections.*;
 import java.util.*;
 
-public class BadNeighbors {
+public class BadNeighbors_2 {
 	public int maxDonations(int[] donations) {
-		don=donations;
-		N = donations.length;
-		memo=new int[N];
-//		print(N);
-		fill(memo,-1);
-		int a = go(1);
-		N--;
-		fill(memo,-1);
-		int b = go(0);
-		return max(a,b);
+		don = donations;
+		dp = new int[don.length + 1];
+		fill(dp, -1);
+		int a = donations[0] + go(2, don.length-2);
+		fill(dp, -1);
+		int b = donations[donations.length - 1] + go(1, don.length-3);
+		fill(dp, -1);
+		int c = go(1, don.length-2);
+		return max(a,max(b,c));
 	}
+
 	int don[];
-	int memo[];
-	int N;
-	int go(int i){
-		if(i>=N)
+	int dp[];
+
+	int go(int i, int j) {
+		if (i>j){
 			return 0;
-		if(memo[i]==-1){
-			int r = go(i+1);
-			r = max(r,don[i]+go(i+2));
-			memo[i]=r;
+		}	
+		if (dp[i] == -1) {
+			int res = go(i+1,j);
+			res = max(res,don[i]+go(i+2,j));
+			dp[i]=res;
 		}
-		return memo[i];
+		return dp[i];
 	}
 	// BEGIN CUT HERE
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			BadNeighbors2Harness.run_test(-1);
+			BadNeighborsHarness.run_test(-1);
 		} else {
 			for (int i = 0; i < args.length; ++i)
-				BadNeighbors2Harness.run_test(Integer.valueOf(args[i]));
+				BadNeighborsHarness.run_test(Integer.valueOf(args[i]));
 		}
 	}
-
 	// END CUT HERE
-
-	private static void print(Object... rs) {
-		System.err.println(Arrays.deepToString(rs).replace("]", "]\n"));
-	}
 }
 
-// BEGIN CUT HERE
+//BEGIN CUT HERE
 
-class BadNeighborsHarness {
+class BadNeighbors2Harness {
 
 	public static void run_test(int casenum) {
 		if (casenum != -1) {
@@ -113,28 +109,28 @@ class BadNeighborsHarness {
 			int expected__ = 19;
 
 			return verifyCase(casenum__, expected__,
-					new BadNeighbors().maxDonations(donations));
+					new BadNeighbors_2().maxDonations(donations));
 		}
 		case 1: {
 			int[] donations = { 11, 15 };
 			int expected__ = 15;
 
 			return verifyCase(casenum__, expected__,
-					new BadNeighbors().maxDonations(donations));
+					new BadNeighbors_2().maxDonations(donations));
 		}
 		case 2: {
 			int[] donations = { 7, 7, 7, 7, 7, 7, 7 };
 			int expected__ = 21;
 
 			return verifyCase(casenum__, expected__,
-					new BadNeighbors().maxDonations(donations));
+					new BadNeighbors_2().maxDonations(donations));
 		}
 		case 3: {
 			int[] donations = { 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 };
 			int expected__ = 16;
 
 			return verifyCase(casenum__, expected__,
-					new BadNeighbors().maxDonations(donations));
+					new BadNeighbors_2().maxDonations(donations));
 		}
 		case 4: {
 			int[] donations = { 94, 40, 49, 65, 21, 21, 106, 80, 92, 81, 679,
@@ -143,7 +139,7 @@ class BadNeighborsHarness {
 			int expected__ = 2926;
 
 			return verifyCase(casenum__, expected__,
-					new BadNeighbors().maxDonations(donations));
+					new BadNeighbors_2().maxDonations(donations));
 		}
 
 		// custom cases

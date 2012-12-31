@@ -1,24 +1,25 @@
-package Util.treeDrawing;
 import java.util.Arrays;
 
 
-public class Fib {
+public class Sets {
 	public static void main(String[] args) {
-		fib(9);
+		a=new int[]{1,2,3,4};
+		subsets(0);
 		printTree();
 	}
 
-	
-	public static long fib(long n){
-		tn(n);//tree node
-		if(n==0 || n==1){
-			tb(); //tree node base case
-			return 0;
+	static int []a;
+	public static void subsets(int i){
+		tn(i);
+		if(i>=a.length){
+			tb();
+			return;
 		}
-		tns();//tree node start
-		long x = fib(n-1)+fib(n-2);
-		tne();//tree node end
-		return x; 
+		tns();
+		subsets(i+1);
+		subsets(i+2);
+		tne();
+		return; 
 	}
 	
 	
